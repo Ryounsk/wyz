@@ -1,0 +1,187 @@
+#include <iostream>
+#include <string>
+using namespace std;
+#define MAX 100
+//��ƽ����ߵĽṹ��
+struct Person
+{
+	//����
+	string m_name;
+	//����
+	int m_age;
+	//�绰
+	string m_phone;
+	//id
+	string m_id; 
+};
+struct Book
+{
+	//����ϵͳ�洢�Ľ�����
+	struct Person personarray[MAX];
+	//�����߸���
+	int m_number; 
+}; 
+//1.���ӽ�����
+void addperson(Book *a)
+{
+	if(a->m_number==MAX)
+	{
+		cout<<"ͼ�������"<<endl; 
+		return;
+	}
+	else
+	{
+		string name;
+		int age;
+		string id;
+		string phone;
+		cout<<"�������������"<<endl;
+		cin>>name;
+		a->personarray[a->m_number].m_name=name;
+		cout<<"�������������"<<endl;
+		cin>>age;
+		a->personarray[a->m_number].m_age=age;
+		cout<<"���������id"<<endl;
+		cin>>id;
+		a->personarray[a->m_number].m_id=id;
+		cout<<"��������ĵ绰"<<endl;
+		cin>>phone;
+		a->personarray[a->m_number].m_phone=phone;
+		cout<<"���ӳɹ�"; 
+		a->m_number++;
+		system("pause");
+		system("cls");
+		
+	}
+	
+} 
+//2.��ʾ�����ߵ�������id 
+void detect(Book *a)
+{
+	cout<<"ͼ�����������"<<a->m_number<<endl; 
+	for(int j=0;j<a->m_number;j++)
+	{
+		cout<<a->personarray[j].m_name<<":"<<a->personarray[j].m_id<<endl;
+		
+	}
+		system("pause");
+		system("cls");
+}
+//3.�ж��Ƿ�������������
+int exist(Book *a,string name)
+{
+	for(int j=0;j<a->m_number;j++)
+	{
+		if(a->personarray[j].m_name==name)
+		{
+			return j;
+		}
+	}
+	return -1;
+ } 
+ //4.ɾ��������
+ void delet(Book *a,int ret)
+ {
+    for(int i=ret;i<a->m_number;i++)
+	{
+		a->personarray[i]=a->personarray[i+1];
+	}
+	a->m_number--;
+	cout<<"ɾ���ɹ�"<<endl; 
+	system("pause");
+	system("cls");
+  } 
+//5.���ҽ����� 
+void find(Book *a,int ret,string name)
+{
+	
+	if(ret==-1)
+	{
+		cout<<"���޴���"<<endl; 
+	} 
+	else
+	{
+		for(int j=0;j<a->m_number;j++)
+		{
+			if(a->personarray[j].m_name==name)
+			{
+				cout<<"������"<<a->personarray[j].m_name<<endl;
+				cout<<"���䣺"<<a->personarray[j].m_age<<endl;
+				cout<<"id:"<<a->personarray[j].m_phone<<endl;  
+			}
+		}
+	}
+	system("pause");
+	system("cls");
+		 
+} 
+//���Ŵ�
+void empty(Book *a)
+{
+	a->m_number=0;
+	cout<<"ͼ����ѹ��Ŵ�"<<endl;
+	system("pause");
+	system("cls"); 
+ } 
+void showmenu()
+{
+    cout<<"=================="<<endl;
+	cout<<"**1.�����Ķ���  **"<<endl;
+	cout<<"**2.��ʾ�Ķ���  **"<<endl;
+	cout<<"**3.ɾ���Ķ���  **"<<endl;
+	cout<<"**4.�����Ķ���  **"<<endl;
+	cout<<"**5.����Ķ���  **"<<endl;
+	cout<<"**0.�˳�����ϵͳ**"<<endl; 
+	cout<<"=================="<<endl;
+}
+int main()
+{
+	Book a;
+	a.m_number=0;
+	int select=0;
+    while(true)
+    {
+    	    showmenu();
+    	    cin>>select;
+    		switch(select)
+    		{
+    			case 1:addperson(&a);
+    			break;
+    			case 2:detect(&a);
+    			break;
+    			case 3:
+    			{
+    			cout<<"�����뻹����Ľ�����"<<endl;
+				string name;
+				cin>>name;
+				exist(&a,name);
+				if(exist(&a,name)==-1)
+				{
+					cout<<"���޴���"<<endl; 
+				} 
+				else
+				{
+					int ret=exist(&a,name);
+					delet(&a,ret);
+				}
+					}
+    			break;
+    			case 4:
+				{
+				string name;
+         	    cout<<"��������Ҫ���ҵĽ�����"<<endl;
+        	    cin>>name;
+        	    exist(&a,name);
+        	    int ret=exist(&a,name);
+				find(&a,ret,name);
+             	}
+             	break;
+             	case 5:empty(&a); 
+				break;
+    			case 0:cout<<"��лʹ��"<<endl;
+				system("pause");
+				return 0;
+				break;
+			}
+	}
+ } 
